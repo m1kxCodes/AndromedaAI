@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andromeda — Concept AI</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="nebula"></div>
+    <div class="stars"></div>
+    <div class="glow-orbit"></div>
+
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-mark">A</span>
+        <div>
+          <p class="brand-title">Andromeda</p>
+          <p class="brand-subtitle">Concept AI Intelligence</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#mission">Mission</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cta">Request Access</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="tag">Space-borne cognition</p>
+          <h1>
+            Andromeda maps the unknown,
+            <span>anticipating patterns beyond the visible.</span>
+          </h1>
+          <p class="lead">
+            A concept intelligence that reads stellar data like a living atlas,
+            turning cosmic signals into actionable foresight.
+          </p>
+          <div class="hero-actions">
+            <button class="cta primary">Launch Preview</button>
+            <button class="cta ghost">View Constellation Map</button>
+          </div>
+          <div class="status-panel">
+            <div>
+              <p class="metric">99.7%</p>
+              <p class="label">Signal integrity</p>
+            </div>
+            <div>
+              <p class="metric">13.1B</p>
+              <p class="label">Lightyears indexed</p>
+            </div>
+            <div>
+              <p class="metric">02:17</p>
+              <p class="label">Response latency</p>
+            </div>
+          </div>
+        </div>
+        <div class="hero-orb">
+          <div class="orb-core"></div>
+          <div class="orb-ring ring-one"></div>
+          <div class="orb-ring ring-two"></div>
+          <div class="orb-ring ring-three"></div>
+          <div class="orb-label">
+            <p>Andromeda Core</p>
+            <span>Quantum empathic lattice</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="console" id="console">
+        <div class="console-header">
+          <div>
+            <h2>Command Console</h2>
+            <p>Chat with Andromeda, call tools, and stream responses live.</p>
+          </div>
+          <div class="console-status">
+            <span class="status-dot"></span>
+            <span id="connectionStatus">Standby</span>
+          </div>
+        </div>
+        <div class="console-body">
+          <div class="message-log" id="messageLog">
+            <div class="message system">
+              <p class="message-role">System</p>
+              <p class="message-text">
+                Welcome to Andromeda. Ask for stellar forecasts, sensor scans, or mission planning.
+              </p>
+            </div>
+          </div>
+          <form class="console-input" id="chatForm">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="Transmit a command..."
+              autocomplete="off"
+            />
+            <button class="cta primary" type="submit">Send</button>
+          </form>
+          <div class="console-actions">
+            <button class="cta ghost" id="clearMemory">Clear Memory</button>
+            <div class="console-meta">
+              <span>Model: <strong id="modelName">gpt-4o-mini</strong></span>
+              <span>Tools: <strong>enabled</strong></span>
+              <span>Stream: <strong>live</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mission" class="panel">
+        <div>
+          <h2>Mission</h2>
+          <p>
+            Andromeda is a space-themed AI concept designed to orchestrate
+            interstellar data, connect distant observations, and surface
+            predictions with cinematic clarity.
+          </p>
+        </div>
+        <div class="panel-grid">
+          <article>
+            <h3>Celestial Synthesis</h3>
+            <p>Merge telescope arrays, probes, and synthetic telemetry.</p>
+          </article>
+          <article>
+            <h3>Temporal Navigation</h3>
+            <p>Forecast stellar events with adaptive probabilistic models.</p>
+          </article>
+          <article>
+            <h3>Deep Signal Harmony</h3>
+            <p>Translate cosmic noise into interpretable storylines.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="capabilities" class="capabilities">
+        <div class="capabilities-header">
+          <h2>Capabilities</h2>
+          <p>Built for operators who need cosmic-scale clarity.</p>
+        </div>
+        <div class="capability-grid">
+          <article class="capability-card">
+            <h3>Stellar Mesh</h3>
+            <p>Builds a living network of star systems and anomalies.</p>
+          </article>
+          <article class="capability-card">
+            <h3>Pulse Sense</h3>
+            <p>Detects micro-shifts in radiation before they cascade.</p>
+          </article>
+          <article class="capability-card">
+            <h3>Gravity Lens</h3>
+            <p>Finds hidden correlations using speculative modeling.</p>
+          </article>
+          <article class="capability-card">
+            <h3>Command Halo</h3>
+            <p>Directs mission control with cinematic dashboards.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="cta-panel">
+        <div>
+          <h2>Open the channel</h2>
+          <p>Ready to align with Andromeda? Signal the launch team.</p>
+        </div>
+        <form class="signal-form">
+          <input type="text" placeholder="Mission codename" aria-label="Mission codename" />
+          <input type="email" placeholder="Contact frequency" aria-label="Contact frequency" />
+          <button class="cta primary" type="submit">Transmit</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Andromeda concept UI • 2049 mission deck</p>
+      <div class="footer-links">
+        <a href="#">Status</a>
+        <a href="#">Security</a>
+        <a href="#">Archive</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
