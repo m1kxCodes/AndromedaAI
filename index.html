@@ -100,10 +100,32 @@
             <button class="cta primary" type="submit">Send</button>
           </form>
           <div class="console-actions">
-            <button class="cta ghost" id="clearMemory">Clear Memory</button>
+            <div class="console-controls">
+              <label class="control-group">
+                <span>Model</span>
+                <select id="modelSelect">
+                  <option value="gpt-5-mini" selected>GPT-5 Mini</option>
+                  <option value="gpt-5">GPT-5</option>
+                </select>
+              </label>
+              <label class="control-group">
+                <span>Temperature</span>
+                <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.6" />
+                <strong id="temperatureValue">0.6</strong>
+              </label>
+              <label class="control-toggle">
+                <input type="checkbox" id="toolsToggle" checked />
+                <span>Tools enabled</span>
+              </label>
+            </div>
+            <div class="console-buttons">
+              <button class="cta ghost" id="clearMemory">Clear Memory</button>
+              <button class="cta ghost" id="regenerate">Regenerate</button>
+              <button class="cta ghost" id="copyLast">Copy Reply</button>
+            </div>
             <div class="console-meta">
-              <span>Model: <strong id="modelName">gpt-4o-mini</strong></span>
-              <span>Tools: <strong>enabled</strong></span>
+              <span>Model: <strong id="modelName">gpt-5-mini</strong></span>
+              <span>Tools: <strong id="toolsStatus">enabled</strong></span>
               <span>Stream: <strong>live</strong></span>
             </div>
           </div>

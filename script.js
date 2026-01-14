@@ -5,10 +5,19 @@ const messageLog = document.querySelector("#messageLog");
 const connectionStatus = document.querySelector("#connectionStatus");
 const statusDot = document.querySelector(".status-dot");
 const clearMemoryButton = document.querySelector("#clearMemory");
+const regenerateButton = document.querySelector("#regenerate");
+const copyLastButton = document.querySelector("#copyLast");
 const modelName = document.querySelector("#modelName");
+const modelSelect = document.querySelector("#modelSelect");
+const temperatureInput = document.querySelector("#temperature");
+const temperatureValue = document.querySelector("#temperatureValue");
+const toolsToggle = document.querySelector("#toolsToggle");
+const toolsStatus = document.querySelector("#toolsStatus");
 
 const sessionId = crypto.randomUUID();
 let isStreaming = false;
+let lastPrompt = "";
+let lastAssistantText = "";
 
 const setStatus = (label, online) => {
   if (connectionStatus) {
@@ -41,10 +50,19 @@ const appendMessage = (role, text) => {
 };
 
 const streamResponse = async (prompt) => {
+  const selectedModel = modelSelect ? modelSelect.value : undefined;
+  const temperature = temperatureInput ? Number(temperatureInput.value) : undefined;
+  const toolsEnabled = toolsToggle ? toolsToggle.checked : true;
   const response = await fetch("/api/chat/stream", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ sessionId, message: prompt }),
+    body: JSON.stringify({
+      sessionId,
+      message: prompt,
+      model: selectedModel,
+      temperature,
+      toolsEnabled,
+    }),
   });
 
   if (!response.ok || !response.body) {
@@ -56,6 +74,7 @@ const streamResponse = async (prompt) => {
   let buffer = "";
   let assistantText = "";
   const assistantEl = appendMessage("assistant", "");
+  lastAssistantText = "";
 
   while (true) {
     const { value, done } = await reader.read();
@@ -80,6 +99,7 @@ const streamResponse = async (prompt) => {
       const parsed = JSON.parse(payload);
       if (parsed.delta) {
         assistantText += parsed.delta;
+        lastAssistantText = assistantText;
         if (assistantEl) {
           assistantEl.textContent = assistantText;
         }
@@ -103,6 +123,7 @@ const sendMessage = async (event) => {
   }
   userInput.value = "";
   appendMessage("user", prompt);
+  lastPrompt = prompt;
   isStreaming = true;
   setStatus("Streaming", true);
 
@@ -131,7 +152,52 @@ const clearMemory = async () => {
     "system",
     "Memory cleared. Ready for new mission parameters."
   );
+  lastPrompt = "";
+  lastAssistantText = "";
   setStatus("Standby", false);
+};
+
+const regenerateLast = async () => {
+  if (!lastPrompt || isStreaming) {
+    return;
+  }
+  appendMessage("user", lastPrompt);
+  isStreaming = true;
+  setStatus("Streaming", true);
+  try {
+    await streamResponse(lastPrompt);
+    setStatus("Online", true);
+  } catch (error) {
+    appendMessage("system", "Transmission failed. Check the API connection.");
+    setStatus("Error", false);
+  } finally {
+    isStreaming = false;
+  }
+};
+
+const copyLastReply = async () => {
+  if (!lastAssistantText) {
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(lastAssistantText);
+    setStatus("Copied", true);
+    setTimeout(() => setStatus("Standby", false), 1200);
+  } catch (error) {
+    appendMessage("system", "Copy failed. Select the response manually.");
+  }
+};
+
+const updateTemperatureLabel = () => {
+  if (temperatureInput && temperatureValue) {
+    temperatureValue.textContent = temperatureInput.value;
+  }
+};
+
+const updateToolsStatus = () => {
+  if (toolsStatus && toolsToggle) {
+    toolsStatus.textContent = toolsToggle.checked ? "enabled" : "disabled";
+  }
 };
 
 if (chatForm) {
@@ -140,6 +206,30 @@ if (chatForm) {
 
 if (clearMemoryButton) {
   clearMemoryButton.addEventListener("click", clearMemory);
+}
+
+if (regenerateButton) {
+  regenerateButton.addEventListener("click", regenerateLast);
+}
+
+if (copyLastButton) {
+  copyLastButton.addEventListener("click", copyLastReply);
+}
+
+if (temperatureInput) {
+  temperatureInput.addEventListener("input", updateTemperatureLabel);
+  updateTemperatureLabel();
+}
+
+if (toolsToggle) {
+  toolsToggle.addEventListener("change", updateToolsStatus);
+  updateToolsStatus();
+}
+
+if (modelSelect && modelName) {
+  modelSelect.addEventListener("change", () => {
+    modelName.textContent = modelSelect.value;
+  });
 }
 
 if (glow) {
